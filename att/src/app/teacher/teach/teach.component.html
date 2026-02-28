@@ -1,0 +1,54 @@
+<div class="header">
+    <div class="logo">LOGO</div>
+    <div class="user">
+      <div class="user-name">{{ username }}</div>
+      <div class="user-image">Teacher</div>
+      <button class="btn btn-danger" (click)="signOut()">Sign Out</button>
+    </div>
+  </div>
+  
+  <div class="container">
+    <h1 class="my-4">Mark Attendance</h1>
+    <hr>
+    <p class="selected-subject">Class Subject: <span>{{ subject }}</span></p>
+
+
+    <div class="form-group">
+      <label for="classSelect">Select Class:</label>
+      <select class="form-control" id="classSelect" [(ngModel)]="selectedClass" (change)="onClassChange()">
+        <option value="">-- Select Class --</option>
+        <option *ngFor="let classItem of allClasses" [value]="classItem.classname">{{ classItem.classname }}</option>
+      </select>
+    </div>
+  
+    <table *ngIf="students.length > 0" class="table table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>Last Name</th>
+          <th>First Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students; let i = index">
+          <td>{{ student.lastname }}</td>
+          <td>{{ student.firstname }}</td>
+          <td>
+            <button [ngClass]="getAttendanceButtonClass('present', i)" class="btn btn-success"
+              (click)="onAttendanceChange(student, 'present')">
+              Present <span *ngIf="attendanceRecords[i]?.status === 'present'" class="badge badge-light">✔</span>
+            </button>
+            <button [ngClass]="getAttendanceButtonClass('absent', i)" class="btn btn-danger"
+              (click)="onAttendanceChange(student, 'absent')">
+              Absent <span *ngIf="attendanceRecords[i]?.status === 'absent'" class="badge badge-light">✘</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="submitAttendance()">Submit Attendance</button>
+    </div>
+  </div>
+  

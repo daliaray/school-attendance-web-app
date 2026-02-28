@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<body>
+ 
+  <main>
+    
+    <div class="analytics-card card-1">
+      <h2>Number of Students</h2>
+      <p>{{totalStudents}}</p>
+    </div>
+    <div class="analytics-card card-2">
+      <h2>Total Classes</h2>
+    <p>{{totalClasses}}</p>
+    </div>
+    <div class="analytics-card card-3">
+      <h2>Teachers</h2>
+      <p>{{totalTeachers}}</p>
+    </div>
+    <div class="analytics-card card-4">
+      <h2>Attendance</h2>
+      <p>{{ percentagePresent}}%</p>
+    </div>
+ 
+    
+
+    <div class="bottom-cards">
+        <div class="analytics-card card-5">
+          <h2 class="card-title">Attendance in school of student today</h2>
+          
+          <h3>Count of students present: {{ countStudentPresent }}</h3>
+          <div class="table-responsive mt-3">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">StudentID</th>
+                  <th scope="col">Student</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let record of attendanceData">
+                  <td>{{ record.student_id }}</td>
+                  <td>{{ record.student }}</td>
+                  <td>{{ record.date }}</td>
+                  <td [ngClass]="record.status === 'present' ? 'bg-success' : 'bg-danger'">{{ record.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+         </div> 
+          
+        
+        <div class="analytics-card card-6">
+          
+          <div class="teacher-card">
+           <h2> List of Teachers </h2>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              <li class="list-group-item" *ngFor="let teacher of teacherdata">
+                <div class="teacher-item">
+                  <div>
+                    <span class="teacher-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                    <span>{{ teacher.lastname }} {{ teacher.firstname }} {{ teacher.subject }}</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            
+          </div>
+        </div>
+      </div>
+  </main>
+</body>
+

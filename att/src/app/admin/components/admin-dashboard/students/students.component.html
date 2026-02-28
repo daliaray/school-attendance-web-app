@@ -1,0 +1,353 @@
+<div class="container-fluid my-3">
+    <!-- Assuming the header comes before the card -->
+    <!-- Replace 'header' with the class or ID of your header element -->
+<header class="header">
+    <!-- Your header content goes here -->
+    <!-- ... -->
+  </header>
+<style>
+    .larger-heading {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+    .table thead th {
+      border-bottom: 2px solid #000;
+    }
+  </style>
+  <div class="container-fluid">
+  
+      <!--first row-->
+      <div class="row text-center text-success mt-3">
+        <div class="col-md-4">
+          <a href="" style="text-decoration: none;" class="text-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <div class="card shadow p-3">
+              <div class="card-body">
+                <h6 class="text-success mb-0" style="font-size: 18px;">
+                  Add Student
+                </h6>
+                <p class="text-success" style="font-size: 24px;">+</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        
+      </div>
+      
+  
+      <!--second row-->
+      <div class="container-fluid">
+        <div class="row">
+        <div class="col-12 mt-3 text-center">
+          <div class="card card-shadow ">
+            <div class="card-body ">
+              <h6 class="text-success larger-heading">
+                List of Students
+              </h6>
+      
+              <div class="table-responsive mt-3">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Lastname</th>
+                      <th scope="col">Firstname</th>
+                      <th scope="col">IDempreinte</th>
+                      <th scope="col">Password</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Mobile No</th>
+                      <th scope="col">class</th>
+                      <th scope="col">Semester</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let student of allStudents">
+                      <td>{{ student.student_id }}</td>
+                      <td>{{ student.lastname }}</td>
+                      <td>{{ student.firstname }}</td>
+                      <td>{{ student.id_empreinte }}</td>
+                      <td>{{ student.password }}</td>
+                      <td>{{ student.email }}</td>
+                      <td>{{ student.contact }}</td>
+                      <td>{{ student.class }}</td>
+                      <td>{{ student.sem }}</td>
+                      <td>
+                        <button type="button" class="btn btn-outline-secondary me-2" (click)="getStudent(student)" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                        <button type="button" class="btn btn-outline-primary me-2" (click)="getStudent(student)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="deleteStudent(student)">Delete</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  
+  
+      <!--add student-->
+  
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title text-success" id="exampleModalLabel">Add Student</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+  
+           <form [formGroup]="studentDetailsForm" (ngSubmit)="addNewStudent()">
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="lastname">
+              <label for="floatingInput">LastName</label>
+              <div *ngIf="studentDetailsForm.get('lastname')?.invalid && (studentDetailsForm.get('lastname')?.dirty || studentDetailsForm.get('lastname')?.touched)" class="text-danger">
+            This is required field
+          </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput0" placeholder="name@example.com" formControlName="firstname">
+              <label for="floatingInput">FirstName</label>
+              <div *ngIf="studentDetailsForm.get('firstname')?.invalid && (studentDetailsForm.get('firstname')?.dirty || studentDetailsForm.get('firstname')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="class" class="form-label">Parent</label>
+              <select class="form-select" id="parent" formControlName="id_parent">
+                <option value="" disabled selected>Select a parent</option>
+                <!-- Iterate through parentList and display options for each parent -->
+                <option *ngFor="let parentItem of parentList" [value]="parentItem.id">{{ parentItem.fullName }}</option>
+              </select>
+              <div *ngIf="studentDetailsForm.get('id_parent')?.invalid && (studentDetailsForm.get('id_parent')?.dirty || studentDetailsForm.get('id_parent')?.touched)" class="text-danger">
+                Please select a parent
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="floatingInput5" placeholder="IDempreinte" formControlName="id_empreinte">
+                <label for="floatingInput">ID Empreinte</label>
+              </div>
+  
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatingInput1" placeholder="name@example.com" formControlName="email">
+              <label for="floatingInput">Email address</label>
+              <div *ngIf="studentDetailsForm.get('email')?.invalid && (studentDetailsForm.get('email')?.dirty || studentDetailsForm.get('email')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating">
+              <input type="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password">
+              <label for="floatingPassword">Password</label>
+              <div *ngIf="studentDetailsForm.get('password')?.invalid && (studentDetailsForm.get('password')?.dirty || studentDetailsForm.get('password')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="floatingInput2" placeholder="name@example.com" formControlName="contact">
+              <label for="floatingInput">Mobile No</label>
+              <div *ngIf="studentDetailsForm.get('contact')?.invalid && (studentDetailsForm.get('contact')?.dirty || studentDetailsForm.get('contact')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="mb-3">
+              <label for="classSelect" class="form-label">Class</label>
+              <select class="form-select" id="classSelect" formControlName="class">
+                <option value="" disabled selected>Select a class</option>
+                <!-- Iterate through allClasses and display options for each class -->
+                <option *ngFor="let classItem of allClasses" [value]="classItem.classname">{{ classItem.classname }}</option>
+              </select>
+              <div *ngIf="studentDetailsForm.get('class')?.invalid && (studentDetailsForm.get('class')?.dirty || studentDetailsForm.get('class')?.touched)" class="text-danger">
+                Please select a class
+              </div>
+            </div>
+            
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="floatingInput4" placeholder="name@example.com" formControlName="sem">
+              <label for="floatingInput">Semester</label>
+              <div *ngIf="studentDetailsForm.get('sem')?.invalid && (studentDetailsForm.get('sem')?.dirty || studentDetailsForm.get('sem')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <button type="button" class="btn btn-primary" (click)="addNewStudent()">Add Student</button>
+  
+           </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!--view student-->
+ 
+  
+  <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-center text-success" id="exampleModalLabel">Student Details</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td scope="row"><b>Lastname</b> </td>
+                <td>{{studentDetailsForm.get('lastname')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Firstname</b> </td>
+                <td>{{studentDetailsForm.get('firstname')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Parent</b> </td>
+                <td>{{ getParentFullName(studentDetailsForm.controls['id_parent'].value) }}</td>
+              </tr>
+               <tr>
+                <td scope="row"><b>ID Empreinte</b> </td>
+                <td>{{studentDetailsForm.get('id_empreinte')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Password</b> </td>
+                <td>{{studentDetailsForm.get('password')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Email</b> </td>
+                <td>{{studentDetailsForm.get('email')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Mobile No</b> </td>
+                <td>{{studentDetailsForm.get('contact')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Class</b> </td>
+                <td>{{studentDetailsForm.get('class')?.value}}</td>
+               </tr>
+               <tr>
+                <td scope="row"><b>Semester</b> </td>
+                <td>{{studentDetailsForm.get('sem')?.value}}</td>
+               </tr>
+               </tbody>
+          </table>
+          <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+ 
+      <!--edit student-->
+  
+      <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title text-success" id="exampleModalLabel">Edit Student </h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+    
+             <form [formGroup]="studentDetailsForm" (ngSubmit)="updateStudent()">
+            
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="editid" placeholder="name@example.com" formControlName="student_id" value="studentDetailsForm.get('student_id').value">
+                    <label for="floatingInput">ID</label>
+                    <div *ngIf="studentDetailsForm.get('student_id')?.invalid && (studentDetailsForm.get('student_id')?.dirty || studentDetailsForm.get('student_id')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+                </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="editlastname" placeholder="name@example.com" formControlName="lastname">
+                <label for="floatingInput">LastName</label>
+                <div *ngIf="studentDetailsForm.get('lastname')?.invalid && (studentDetailsForm.get('lastname')?.dirty || studentDetailsForm.get('lastname')?.touched)" class="text-danger">
+              This is required field
+            </div>
+              </div>
+    
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="editfirstname" placeholder="name@example.com" formControlName="firstname">
+                <label for="floatingInput">FirstName</label>
+                <div *ngIf="studentDetailsForm.get('firstname')?.invalid && (studentDetailsForm.get('firstname')?.dirty || studentDetailsForm.get('firstname')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+              </div>
+  
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control"  placeholder="name@example.com" formControlName="id_empreinte">
+                <label for="floatingInput">ID Empreinte</label>
+              </div>
+              
+          <!-- Set the button's background color dynamically -->
+<button (click)="FP1()" [style.background-color]="buttonBackgroundColor">Fetch ID Empreinte</button>
+
+
+              
+    
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="editemail" placeholder="name@example.com" formControlName="email">
+                <label for="floatingInput">Email address</label>
+                <div *ngIf="studentDetailsForm.get('email')?.invalid && (studentDetailsForm.get('email')?.dirty || studentDetailsForm.get('email')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+              </div>
+    
+              <div class="form-floating">
+                <input type="password" class="form-control" id="editPassword" placeholder="Password" formControlName="password">
+                <label for="floatingPassword">Password</label>
+                <div *ngIf="studentDetailsForm.get('password')?.invalid && (studentDetailsForm.get('password')?.dirty || studentDetailsForm.get('password')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+              </div>
+    
+              <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="editcontact" placeholder="name@example.com" formControlName="contact">
+                <label for="floatingInput">Mobile No</label>
+                <div *ngIf="studentDetailsForm.get('contact')?.invalid && (studentDetailsForm.get('contact')?.dirty || studentDetailsForm.get('contact')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+              </div>
+    
+              <div class="mb-3">
+                <label for="class" class="form-label">Class</label>
+                <select class="form-select" id="class" formControlName="class">
+                  <option value="" disabled>Select a class</option>
+                  <!-- Iterate through allClasses and display options for each class -->
+                  <option *ngFor="let classItem of allClasses" [value]="classItem.classname">{{ classItem.classname }}</option>
+                </select>
+                <div *ngIf="studentDetailsForm.get('class')?.invalid && (studentDetailsForm.get('class')?.dirty || studentDetailsForm.get('class')?.touched)" class="text-danger">
+                  Please select a class
+                </div>
+              </div>
+
+
+             
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="editsem" placeholder="name@example.com" formControlName="sem">
+                <label for="floatingInput">Semester</label>
+                <div *ngIf="studentDetailsForm.get('sem')?.invalid && (studentDetailsForm.get('sem')?.dirty || studentDetailsForm.get('sem')?.touched)" class="text-danger">
+                  This is required field
+                </div>
+              </div>
+    
+              <button type="button" class="btn btn-primary" (click)="updateStudent()">update Student</button>
+  
+            </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+  </div>
+
+</div>

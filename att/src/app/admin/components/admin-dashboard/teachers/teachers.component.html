@@ -1,0 +1,314 @@
+<div class="container-fluid my-3">
+  <!-- Assuming the header comes before the card -->
+  <!-- Replace 'header' with the class or ID of your header element -->
+<header class="header">
+  <!-- Your header content goes here -->
+  <!-- ... -->
+</header>
+<style>
+  .larger-heading {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+  .table thead th {
+    border-bottom: 2px solid #000;
+  }
+</style>
+<div class="container-fluid">
+
+    <!--first row-->
+    <div class="row text-center text-success mt-3">
+      <div class="col-md-4">
+        <a href="" style="text-decoration: none;" class="text-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <div class="card shadow p-3">
+            <div class="card-body">
+              <h6 class="text-success mb-0" style="font-size: 18px;">
+                Add Teacher
+              </h6>
+              <p class="text-success" style="font-size: 24px;">+</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="" style="text-decoration: none;" class="text-success">
+          <div class="card shadow p-3">
+            <div class="card-body">
+              <h6 class="text-success mb-0" style="font-size: 18px;">
+                Total Teachers
+              </h6>
+              <p class="text-success" style="font-size: 24px;">10</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+
+    <!--second row-->
+    <div class="col-pe2 mt-3">
+      <div class="col-sm-12 text-center">
+        <div class="card shadow">
+          <div class="card-body">
+            <h6 class="text-success larger-heading">
+              List of Teachers
+            </h6>
+    
+            <div class="table-responsive mt-3">
+              <table class="table table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Lastname</th>
+                    <th scope="col">Firstname</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let teacher of allTeachers">
+                    <td>{{ teacher.teacher_id }}</td>
+                    <td>{{ teacher.lastname }}</td>
+                    <td>{{ teacher.firstname }}</td>
+                    <td>{{ teacher.password }}</td>
+                    <td>{{ teacher.email }}</td>
+                    <td>{{ teacher.subject }}</td>
+                    <td>{{ teacher.contact }}</td>
+                    <td>{{ teacher.adresse }}</td>
+                    <td>
+                      <button type="button" class="btn btn-outline-secondary me-2" (click)="getTeacher(teacher)" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                      <button type="button" class="btn btn-outline-primary me-2" (click)="getTeacher(teacher)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                      <button type="button" class="btn btn-outline-danger" (click)="deleteTeacher(teacher)">Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+
+    <!--add teacher-->
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title text-success" id="exampleModalLabel">Add Teacher</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+         <form [formGroup]="teacherDetailsForm" (ngSubmit)="addNewTeacher()">
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="lastname">
+            <label for="floatingInput">LastName</label>
+            <div *ngIf="teacherDetailsForm.get('lastname')?.invalid && (teacherDetailsForm.get('lastname')?.dirty || teacherDetailsForm.get('lastname')?.touched)" class="text-danger">
+          This is required field
+        </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput0" placeholder="name@example.com" formControlName="firstname">
+            <label for="floatingInput">FirstName</label>
+            <div *ngIf="teacherDetailsForm.get('firstname')?.invalid && (teacherDetailsForm.get('firstname')?.dirty || teacherDetailsForm.get('firstname')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput1" placeholder="name@example.com" formControlName="email">
+            <label for="floatingInput">Email address</label>
+            <div *ngIf="teacherDetailsForm.get('email')?.invalid && (teacherDetailsForm.get('email')?.dirty || teacherDetailsForm.get('email')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" formControlName="password">
+            <label for="floatingPassword">Password</label>
+            <div *ngIf="teacherDetailsForm.get('password')?.invalid && (teacherDetailsForm.get('password')?.dirty || teacherDetailsForm.get('password')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput2" placeholder="name@example.com" formControlName="subject">
+            <label for="floatingInput">Subject</label>
+            <div *ngIf="teacherDetailsForm.get('subject')?.invalid && (teacherDetailsForm.get('subject')?.dirty || teacherDetailsForm.get('subject')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="floatingInput3" placeholder="name@example.com" formControlName="contact">
+            <label for="floatingInput">Mobile</label>
+            <div *ngIf="teacherDetailsForm.get('contact')?.invalid && (teacherDetailsForm.get('contact')?.dirty || teacherDetailsForm.get('contact')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput4" placeholder="name@example.com" formControlName="adresse">
+            <label for="floatingInput">Adresse</label>
+            <div *ngIf="teacherDetailsForm.get('adresse')?.invalid && (teacherDetailsForm.get('address')?.dirty || teacherDetailsForm.get('adresse')?.touched)" class="text-danger">
+              This is required field
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="addNewTeacher()">Add Teacher</button>
+
+         </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--view teacher-->
+
+
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title text-center text-success" id="exampleModalLabel">Teacher Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <tbody>
+            <tr>
+              <td scope="row"><b>Lastname</b> </td>
+              <td>{{teacherDetailsForm.get('lastname')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Firstname</b> </td>
+              <td>{{teacherDetailsForm.get('firstname')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Password</b> </td>
+              <td>{{teacherDetailsForm.get('password')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Email</b> </td>
+              <td>{{teacherDetailsForm.get('email')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Subject</b> </td>
+              <td>{{teacherDetailsForm.get('subject')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Mobile No</b> </td>
+              <td>{{teacherDetailsForm.get('contact')?.value}}</td>
+             </tr>
+             <tr>
+              <td scope="row"><b>Adresse</b> </td>
+              <td>{{teacherDetailsForm.get('adresse')?.value}}</td>
+             </tr>
+             </tbody>
+        </table>
+        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+    <!--edit teacher-->
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title text-success" id="exampleModalLabel">Edit Teacher</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+  
+           <form [formGroup]="teacherDetailsForm" (ngSubmit)="updateTeacher()">
+          
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="editid" placeholder="name@example.com" formControlName="teacher_id" value="teacherDetailsForm.get('teacher_id').value">
+              <label for="floatingInput">ID</label>
+              <div *ngIf="teacherDetailsForm.get('teacher_id')?.invalid && (teacherDetailsForm.get('teacher_id')?.dirty || teacherDetailsForm.get('teacher_id')?.touched)" class="text-danger">
+            This is required field
+          </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id=" editlastname" placeholder="name@example.com" formControlName="lastname" value="teacherDetailsForm.get('lastname').value">
+              <label for="floatingInput">LastName</label>
+              <div *ngIf="teacherDetailsForm.get('lastname')?.invalid && (teacherDetailsForm.get('lastname')?.dirty || teacherDetailsForm.get('lastname')?.touched)" class="text-danger">
+            This is required field
+          </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="editfirstname" placeholder="name@example.com" formControlName="firstname" value="teacherDetailsForm.get('firstname').value">
+              <label for="floatingInput">FirstName</label>
+              <div *ngIf="teacherDetailsForm.get('firstname')?.invalid && (teacherDetailsForm.get('firstname')?.dirty || teacherDetailsForm.get('firstname')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="editemail" placeholder="name@example.com" formControlName="email" value="teacherDetailsForm.get('email').value">
+              <label for="floatingInput">Email address</label>
+              <div *ngIf="teacherDetailsForm.get('email')?.invalid && (teacherDetailsForm.get('email')?.dirty || teacherDetailsForm.get('email')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating">
+              <input type="password" class="form-control" id="editPassword" placeholder="Password" formControlName="password" value="teacherDetailsForm.get('password').value">
+              <label for="floatingPassword">Password</label>
+              <div *ngIf="teacherDetailsForm.get('password')?.invalid && (teacherDetailsForm.get('password')?.dirty || teacherDetailsForm.get('password')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="editsubject" placeholder="name@example.com" formControlName="subject" value="teacherDetailsForm.get('subject').value">
+              <label for="floatingInput">Subject</label>
+              <div *ngIf="teacherDetailsForm.get('subject')?.invalid && (teacherDetailsForm.get('subject')?.dirty || teacherDetailsForm.get('subject')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="editcontact" placeholder="name@example.com" formControlName="contact" value="teacherDetailsForm.get('contact').value">
+              <label for="floatingInput">Mobile</label>
+              <div *ngIf="teacherDetailsForm.get('contact')?.invalid && (teacherDetailsForm.get('contact')?.dirty || teacherDetailsForm.get('contact')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="editadresse" placeholder="name@example.com" formControlName="adresse" value="teacherDetailsForm.get('adresse').value">
+              <label for="floatingInput">Adresse</label>
+              <div *ngIf="teacherDetailsForm.get('adresse')?.invalid && (teacherDetailsForm.get('address')?.dirty || teacherDetailsForm.get('adresse')?.touched)" class="text-danger">
+                This is required field
+              </div>
+            </div>
+  
+            <button type="button" class="btn btn-primary" (click)="updateTeacher()">update Teacher</button>
+
+           </form>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+</div>
+</div>

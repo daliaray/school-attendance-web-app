@@ -1,0 +1,22 @@
+/* Add custom styles for spacing between the header and the card */
+.header {
+    margin-bottom: 50px;
+  }
+
+  
+  .cadre {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+/* Style the table rows */
+.table tbody tr {
+  cursor: pointer;
+}
+
+/* Highlight table rows on hover */
+.table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+  

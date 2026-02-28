@@ -1,0 +1,89 @@
+<div class="container-fluid my-3">
+  <!-- Assuming the header comes before the card -->
+  <!-- Replace 'header' with the class or ID of your header element -->
+
+  <header class="header">
+    <!-- Your header content goes here -->
+    <!-- ... -->
+  </header>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Form starts here -->
+      <div class="card w-100">
+        <div class="card-body">
+          <h1 class="text-success">Add Class</h1>
+
+          <form [formGroup]="classDetailsForm" (ngSubmit)="addNewClass()">
+            <div class="mb-3">
+              <label for="classname" class="form-label">Class name</label>
+              <input type="text" class="form-control" id="classname" formControlName="classname">
+              <div *ngIf="classDetailsForm.get('classname')?.invalid && (classDetailsForm.get('classname')?.dirty || classDetailsForm.get('classname')?.touched)" class="text-danger">
+                This is a required field
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-success">Add class</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container-fluid my-3">
+  <!-- Your existing content here -->
+
+  <!-- Add the search input -->
+  <div class="mb-3">
+    <input type="text" class="form-control" placeholder="Search Class" [(ngModel)]="searchQuery" (input)="onSearch()">
+  </div>
+
+  <!-- Display the search results in a table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Class Name</th>
+        <th>Action</th>
+        <!-- Add other table headers if you have more properties to display -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let classItem of filteredClasses">
+        <td>{{ classItem.classname }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="getStudentsByClass(classItem.classname)">View Students</button>
+        </td>
+        <!-- Add other table cells for other properties if needed -->
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cadre">
+    <!-- Display the students in the selected class -->
+    <div *ngIf="allStudents.length > 0">
+      <h2 class="custom-heading text-success">
+        Students in Class: {{ researchedClass }} ({{ studentCountByClass }} students)
+      </h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <!-- Add other table headers for student properties if needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of allStudents">
+            <td>{{ student.lastname }}</td>
+            <td>{{ student.firstname }}</td>
+            <!-- Add other table cells for student properties if needed -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+</div>
+
+  
+</div>

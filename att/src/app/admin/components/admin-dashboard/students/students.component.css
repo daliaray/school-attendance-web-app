@@ -1,0 +1,15 @@
+.header {
+    margin-bottom: 30px;
+  }
+ 
+
+
+  .card-shadow {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Optional: Add a rounded border for the card */
+  }
+
+  .table-responsive {
+    width: 100%; /* Make the table container span the full width */
+  }

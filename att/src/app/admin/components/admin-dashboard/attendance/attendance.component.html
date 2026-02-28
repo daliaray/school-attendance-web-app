@@ -1,0 +1,102 @@
+<div class="container">
+  <h1>Attendance</h1>
+  <div class="form-group">
+    <label for="classSelect">Select Class:</label>
+    <select class="form-control" id="classSelect" [(ngModel)]="selectedClass" (change)="onClassChange()">
+      <option value="">-- Select Class --</option>
+      <!-- Loop through classes and display them as options -->
+      <option *ngFor="let classItem of allClasses" [value]="classItem.classname">{{ classItem.classname }}</option>
+    </select>
+  </div>
+
+   <!--second row-->
+   <div class="container-fluid">
+    <div class="row">
+    <div class="col-12 mt-3 text-center">
+      <div class="card card-shadow ">
+        <div class="card-body ">
+          <h3 class="text-success larger-heading display-4">
+            List of attendance by class
+          </h3>
+  
+          <div class="table-responsive mt-3">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">StudentID</th>
+                  <th scope="col">Student</th>
+                  <th scope="col">date</th>
+                  <th scope="col">subject</th>
+                  <th scope="col">status</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let attendance of allattendance" >
+                  <td>{{ attendance.student_id }}</td>
+                  <td>{{ attendance.student }}</td>
+                  <td>{{ attendance.date }}</td>
+                  <td>{{ attendance.subject }}</td>
+                  <td [ngClass]="attendance.status === 'present' ? 'bg-succes' : 'bg-dange'">{{ attendance.status }}</td>
+                  
+                  
+                 <!-- <td>
+                    <button type="button" class="btn btn-outline-secondary me-2" (click)="getStudent(student)" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
+                    <button type="button" class="btn btn-outline-primary me-2" (click)="getStudent(student)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="deleteStudent(student)">Delete</button>
+                  </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<hr>
+  <div class="container">
+    <h1>Attendance in school by student</h1>
+  
+    <!-- Search input field -->
+    <div class="form-group">
+      <label for="studentName">Enter Student Name:</label>
+      <input type="text" id="studentName" class="form-control" [(ngModel)]="searchQuery" placeholder="Enter student name">
+    </div>
+  
+    <!-- Search button -->
+    <button class="btn btn-primary" (click)="searchByStudentName(searchQuery)">Search</button>
+  
+    <!-- Display search results or attendance records here -->
+    <!-- Example: Displaying the retrieved attendance records -->
+    <div *ngIf="attendanceRecords && attendanceRecords.length > 0">
+      
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th>StudentID</th>
+            <th>Student</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+          <tr *ngFor="let record of attendanceRecords">
+              <td>{{ record.student_id }}</td>
+              <td>{{ record.student }}</td>
+              <td>{{ record.date }}</td>
+              <td [ngClass]="record.status === 'present' ? 'bg-succes' : 'bg-dange'">{{ record.status }}</td>
+              
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+  
+
+  

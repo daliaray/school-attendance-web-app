@@ -1,0 +1,36 @@
+/* Add this to your component's stylesheet (e.g., attendance.component.css) */
+
+/* Style for the Present button */
+.btn-success.active {
+    background-color: green;
+    color: white;
+    border-color: green;
+  }
+  
+  /* Style for the Absent button */
+  .btn-danger.active {
+    background-color: red;
+    color: white;
+    border-color: red;
+  }
+  
+
+  .bg-succes {
+    color: white; /* Set text color */
+    background-color: green;
+  }
+  
+  .bg-dange {
+    color: white; /* Set text color */
+   background-color: red;
+  }
+  .card-shadow {
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Optional: Add a rounded border for the card */
+  }
+
+  .table-responsive {
+    width: 100%; /* Make the table container span the full width */
+  }  
+  
